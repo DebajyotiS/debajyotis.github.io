@@ -18,4 +18,29 @@ Welcome to my personal website. I work at the intersection of machine learning, 
 
 Feel free to explore and get in touch.
 
-**[About](about/index.md)** | **[Publications](publications/index.md)** | **[Contact](contact/index.md)**
+<style>
+  .center-links {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    text-align: center;
+  }
+
+  .center-links a {
+    margin: 0.5rem 0;
+    text-decoration: none;
+    color: var(--accent-color);
+    font-size: 1.2rem;
+  }
+</style>
+
+<div class="center-links">
+  <h1>Welcome to My Website</h1>
+  <p>Explore my work and research:</p>
+  <a href="/about/">About</a>
+  <a href="/projects/">Projects</a>
+  <a href="/publications/">Publications</a>
+  <a href="/contact/">Contact</a>
+</div>
