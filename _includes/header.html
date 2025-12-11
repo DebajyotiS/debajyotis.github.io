@@ -7,18 +7,19 @@
   <style>
     /* Basic styles for light and dark themes */
     :root {
-      --background-color: #F9F8F6;
-      --text-color: #140a01;
-      --accent-color: #924608;
-      --highlight-color: #C9B59C;
+      --background-color: #FFFFFF; /* Light mode background */
+      --text-color: #333333; /* Light mode text */
+      --accent-color: #6200EE; /* Light mode accent */
+      --highlight-color: #03DAC5; /* Light mode highlight */
+      --warning-color: #B00020; /* Light mode warning */
     }
 
     [data-theme="dark"] {
-      --background-color: #1C1C1C;
-      --text-color: #F5E8D8;
-      --accent-color: #FF6F61;
-      --highlight-color: #DAA520;
-      --warning-color: #FF4500;
+      --background-color: #121212; /* Dark mode background */
+      --text-color: #E0E0E0; /* Dark mode text */
+      --accent-color: #BB86FC; /* Dark mode accent */
+      --highlight-color: #03DAC6; /* Dark mode highlight */
+      --warning-color: #CF6679; /* Dark mode warning */
     }
 
     body {
@@ -32,7 +33,6 @@
     }
 
     header {
-      padding: 1rem;
       background-color: var(--highlight-color);
       color: var(--text-color);
     }
@@ -53,11 +53,10 @@
     }
 
     button {
-      margin-top: 1rem;
-      padding: 0.5rem 1rem;
       background-color: var(--accent-color);
       color: var(--text-color);
       border: none;
+      padding: 0.5rem 1rem;
       cursor: pointer;
       transition: background-color 0.3s;
     }
