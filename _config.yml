@@ -1,0 +1,18 @@
+theme: minima
+
+# Site settings
+title: "Debajyoti Sengupta | AI Researcher"
+description: "Personal website of Debajyoti Sengupta, AI researcher working on neural state modulation and hierarchical reasoning systems."
+url: "https://debajyotis.github.io"
+baseurl: ""
+
+# Build settings
+markdown: kramdown
+kramdown:
+  input: GFM
+
+# Added theme toggle styles
+
+# Custom CSS for dark and light mode
+assets:
+  - css/styles.css
