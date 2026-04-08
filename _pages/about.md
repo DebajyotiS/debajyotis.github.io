@@ -18,8 +18,8 @@ selected_papers: true
 social: true
 ---
 
-PhD in Physics and Machine Learning (<a href="https://www.unige.ch/">University of Geneva</a>, 2020–2024), working on generative modelling for particle physics at <a href="https://home.cern/">CERN</a>; co-recipient of the <a href="https://breakthroughprize.org/">ATLAS Breakthrough Prize</a>.
+PhD in Physics and Machine Learning from the <a href="https://www.unige.ch/">University of Geneva</a>, where I worked on generative modelling for particle physics at <a href="https://home.cern/">CERN</a> and contributed to the <a href="https://breakthroughprize.org/">ATLAS collaboration</a>.
 
-Currently a Scientific Collaborator at <a href="https://www.epfl.ch/">EPFL</a> &amp; <a href="https://dandelionscience.com/">Dandelion Science</a>, developing real-time multimodal generative systems for neural optimisation (EEG/MEG/fMRI + vision), scaling models to ~2B parameters under tight latency and memory constraints.
+I now work as a Scientific Collaborator at <a href="https://www.epfl.ch/">EPFL</a> and <a href="https://dandelionscience.com/">Dandelion Science</a>, building multimodal generative systems that operate under real-world constraints. My focus has been on scaling models to the billion-parameter range while keeping latency and memory practical, and on making these systems usable in closed-loop settings with neural data (EEG, MEG, fMRI) and vision.
 
-Interests: efficient ML, generative simulation for scientific domains, and robustness under distribution shift.
+More broadly, I'm interested in how large models can be adapted and deployed efficiently, especially in settings where compute, data, or reliability are limiting factors. A lot of my work sits at the boundary between generative modelling, real-time systems, and scientific applications.
