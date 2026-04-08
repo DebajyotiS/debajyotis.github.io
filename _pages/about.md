@@ -4,7 +4,6 @@ title: about
 permalink: /
 subtitle: >
   Scientific Collaborator, <a href="https://www.epfl.ch/">EPFL</a> &amp; <a href="https://dandelionscience.com/">Dandelion Science</a>, Geneva.
-  Looking for ML research roles in Zürich, Amsterdam, and western Europe.
 
 profile:
   align: right
@@ -12,7 +11,7 @@ profile:
   image_circular: false
   more_info: >
     <p>Geneva, Switzerland</p>
-    <p><a href="mailto:debajyoti.sg@gmail.com">debajyoti.sg@gmail.com</a></p>
+    <p><a href="mailto:debajyoti.sengupta@epfl.ch">debajyoti.sengupta@epfl.ch</a></p>
 
 news: false
 selected_papers: true

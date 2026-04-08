@@ -1,12 +1,12 @@
 {
   "basics": {
     "name": "Debajyoti Sengupta",
-    "label": "ML Research Engineer",
+    "label": "Machine Learning Research Engineer",
     "image": "",
-    "email": "debajyoti.sg@gmail.com",
+    "email": "debajyoti.sengupta@epfl.ch",
     "phone": "",
     "url": "https://debajyotis.github.io",
-    "summary": "PhD in Physics and Machine Learning (University of Geneva). Working on generative models, multimodal post-training, and scientific ML. Co-recipient of the Breakthrough Prize in Fundamental Physics (ATLAS Collaboration).",
+    "summary": "Machine Learning Research Engineer building efficient generative systems across physics and neuroscience. Designed and deployed 2B–10B parameter models for multimodal settings, achieving 100× faster simulation than Monte Carlo, real-time closed-loop neural control, and 60% memory reduction with <1% performance loss via QLoRA. Bridges research and production with peer-reviewed work (SciPost, PRD, JHEP) and systems developed in collaboration with industry.",
     "location": {
       "city": "Geneva",
       "countryCode": "CH",
@@ -33,14 +33,33 @@
   "work": [
     {
       "name": "EPFL & Dandelion Science",
-      "position": "Scientific Collaborator",
+      "position": "Scientific Collaborator (ML Research Engineer)",
       "url": "https://www.epfl.ch/",
-      "startDate": "2024-01-01",
-      "summary": "Building generative control systems for real-time neural optimisation across EEG, MEG, fMRI, and vision modalities. Scaled multimodal models to ~2B parameters under strict latency constraints; reduced training memory by ~60% via QLoRA with <1% degradation in neural prediction accuracy.",
+      "startDate": "2025-01-01",
+      "summary": "Building generative control systems for real-time neural optimisation across EEG, MEG, fMRI, and vision modalities.",
       "highlights": [
-        "Scaled multimodal models to ~2B parameters",
-        "~60% training memory reduction via QLoRA",
-        "Real-time neural optimisation across EEG, MEG, fMRI, vision"
+        "Developed and deployed a generative control system mapping neural state deltas to stimulus generation across 5 modalities (EEG, MEG, fMRI, video, image), enabling real-time closed-loop optimisation of neural responses",
+        "Scaled multimodal models to ~2B parameters under strict latency constraints, supporting online inference with dual-modality conditioning in control loops",
+        "Reduced training memory footprint by ~60% vs full finetuning using QLoRA and quantisation-aware training, with ≤1% degradation in neural prediction accuracy",
+        "Learned shared latent representations aligning pretrained vision and neural foundation models, enabling data-efficient cross-modal conditioning under limited neural data regimes",
+        "Built production-grade multimodal pipelines for training, alignment, and optimisation, used in collaboration with a Swiss–US NeuroAI company for therapeutic development",
+        "Filed patent on generative neural control framework for therapy design"
+      ]
+    },
+    {
+      "name": "CERN / University of Geneva",
+      "position": "Machine Learning Researcher",
+      "url": "https://www.unige.ch/",
+      "startDate": "2020-01-01",
+      "endDate": "2024-01-01",
+      "summary": "PhD research at the intersection of particle physics and generative modelling at CERN.",
+      "highlights": [
+        "Developed CURTAINs, a conditional generative anomaly detection method achieving signal efficiency ~16 with consistent gains over CWoLa/CATHODE, while reducing training time from ~10h to 3h",
+        "Designed RAD-OT, an optimal transport reformulation, reducing training time to ≤1h while maintaining detection performance",
+        "Designed diffusion-based particle generators (PC-JeDi, PC-Droid) enabling ~100× faster particle simulation than Monte Carlo with ≤1% Wasserstein deviation",
+        "Scaled training to TB-scale datasets using distributed multi-node systems (SLURM, 2 nodes, 16×H200 GPUs), sustaining high-throughput training workloads",
+        "Increased GPU utilisation from ~16% to 100% by removing data pipeline bottlenecks and restructuring distributed training",
+        "Co-recipient of Breakthrough Prize in Fundamental Physics (ATLAS Collaboration)"
       ]
     }
   ],
@@ -54,6 +73,15 @@
       "startDate": "2020-01-01",
       "endDate": "2024-01-01",
       "summary": "Intersection of particle physics and generative modelling at CERN."
+    },
+    {
+      "institution": "University of Calcutta",
+      "location": "Kolkata, India",
+      "url": "https://www.caluniv.ac.in/",
+      "area": "Physics",
+      "studyType": "MSc",
+      "startDate": "2017-01-01",
+      "endDate": "2019-01-01"
     }
   ],
   "awards": [
@@ -90,38 +118,55 @@
   ],
   "skills": [
     {
-      "name": "Machine Learning",
+      "name": "Core",
       "level": "Expert",
       "icon": "fa-solid fa-brain",
       "keywords": [
-        "Generative models",
-        "Diffusion models",
-        "Post-training (SFT, RLHF, DPO)",
-        "QLoRA / PEFT",
-        "Multimodal learning"
+        "Generative Models (Diffusion, Flows)",
+        "Multimodal Learning",
+        "Scientific ML",
+        "Representation Learning"
       ]
     },
     {
-      "name": "Scientific ML",
+      "name": "Frameworks",
       "level": "Expert",
-      "icon": "fa-solid fa-atom",
+      "icon": "fa-solid fa-layer-group",
       "keywords": [
-        "Particle physics simulation",
-        "Anomaly detection",
-        "Distribution shift",
-        "Optimal transport"
+        "PyTorch",
+        "PyTorch Lightning",
+        "Transformers"
       ]
     },
     {
-      "name": "Engineering",
+      "name": "Systems",
+      "level": "Proficient",
+      "icon": "fa-solid fa-server",
+      "keywords": [
+        "Distributed Training (SLURM, Multi-node GPU)",
+        "HPC",
+        "Docker",
+        "Snakemake"
+      ]
+    },
+    {
+      "name": "Techniques",
+      "level": "Expert",
+      "icon": "fa-solid fa-flask",
+      "keywords": [
+        "QLoRA",
+        "Quantisation-Aware Training",
+        "Parameter-Efficient Finetuning",
+        "Optimal Transport"
+      ]
+    },
+    {
+      "name": "Languages",
       "level": "Proficient",
       "icon": "fa-solid fa-code",
       "keywords": [
-        "PyTorch",
-        "MLX",
         "Python",
-        "CUDA / MPS",
-        "uv / Docker"
+        "Rust"
       ]
     }
   ],
