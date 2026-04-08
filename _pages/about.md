@@ -8,7 +8,7 @@ subtitle: >
 
 profile:
   align: right
-  image: prof_pic.jpg
+  image: ds.jpg
   image_circular: false
   more_info: >
     <p>Geneva, Switzerland</p>
