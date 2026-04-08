@@ -18,8 +18,8 @@ selected_papers: true
 social: true
 ---
 
-PhD in Physics and Machine Learning, University of Geneva (2020–2024), working at the intersection of particle physics and generative modelling at CERN. Co-recipient of the Breakthrough Prize in Fundamental Physics (ATLAS Collaboration).
+PhD in Physics and Machine Learning (<a href="https://www.unige.ch/">University of Geneva</a>, 2020–2024), working on generative modelling for particle physics at <a href="https://home.cern/">CERN</a>; co-recipient of the <a href="https://breakthroughprize.org/">ATLAS Breakthrough Prize</a>.
 
-Currently Scientific Collaborator at EPFL &amp; Dandelion Science, building generative control systems for real-time neural optimisation across EEG, MEG, fMRI, and vision modalities. Scaled multimodal models to ~2B parameters under strict latency constraints; reduced training memory by ~60% via QLoRA with &lt;1% degradation in neural prediction accuracy.
+Currently a Scientific Collaborator at <a href="https://www.epfl.ch/">EPFL</a> &amp; <a href="https://dandelionscience.com/">Dandelion Science</a>, developing real-time multimodal generative systems for neural optimisation (EEG/MEG/fMRI + vision), scaling models to ~2B parameters under tight latency and memory constraints.
 
-Research interests: efficient post-training of large models under compute constraints; generative models for scientific simulation (particle physics, molecular design, neural data); causal evaluation and distribution shift in recommendation and scientific ML settings.
+Interests: efficient ML, generative simulation for scientific domains, and robustness under distribution shift.
