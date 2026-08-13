@@ -3,7 +3,7 @@
     "name": "Debajyoti Sengupta",
     "label": "Machine Learning Research Engineer",
     "image": "",
-    "email": "debajyoti.sengupta@epfl.ch",
+    "email": "",
     "phone": "",
     "url": "https://debajyotis.github.io",
     "summary": "Machine Learning Research Engineer building efficient generative systems across physics and neuroscience. Designed and deployed 2B–10B parameter models for multimodal settings, achieving 100× faster simulation than Monte Carlo, real-time closed-loop neural control, and 60% memory reduction with <1% performance loss via QLoRA. Bridges research and production with peer-reviewed work (SciPost, PRD, JHEP) and systems developed in collaboration with industry.",

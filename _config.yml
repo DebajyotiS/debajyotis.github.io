@@ -6,7 +6,7 @@ title: blank # the website title (if blank, full name will be used instead)
 first_name: Debajyoti
 middle_name:
 last_name: Sengupta
-email: debajyoti.sengupta@epfl.ch
+email: # intentionally left blank -- use the contact form instead
 description: > # the ">" symbol means to ignore newlines until "footer_text:"
   ML research engineer working on generative models, multimodal post-training, and scientific ML.
   PhD in Physics and Machine Learning, University of Geneva. Based in Geneva.
@@ -113,7 +113,7 @@ youtube_id: # your youtube channel id (youtube.com/@<youtube_id>)
 zotero_username: # your zotero username
 
 contact_note: >
-  Best reached by email.
+  Get in touch via the <a href="/contact/">contact form</a>.
 
 # -----------------------------------------------------------------------------
 # Analytics and search engine verification
@@ -299,8 +299,8 @@ jekyll-archives:
     tag: "/blog/tag/:name/"
     category: "/blog/category/:name/"
 
-display_tags: ["formatting", "images", "links", "math", "code", "blockquotes"] # these tags will be displayed on the front page of your blog
-display_categories: ["external-services"] # these categories will be displayed on the front page of your blog
+display_tags: [] # these tags will be displayed on the front page of your blog
+display_categories: [] # these categories will be displayed on the front page of your blog
 
 # -----------------------------------------------------------------------------
 # Jekyll Scholar

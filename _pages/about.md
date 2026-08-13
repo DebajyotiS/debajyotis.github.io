@@ -11,7 +11,7 @@ profile:
   image_circular: false
   more_info: >
     <p>Geneva, Switzerland</p>
-    <p><a href="mailto:debajyoti.sengupta@epfl.ch">debajyoti.sengupta@epfl.ch</a></p>
+    <p><a href="/contact/">Get in touch</a></p>
 
 news: false
 selected_papers: true
