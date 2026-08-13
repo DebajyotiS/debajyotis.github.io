@@ -1,50 +1,204 @@
 ---
 ---
 
-@article{curtains2024,
-  title        = {CURTAINs Flows For Flows: Constructing Unobserved Regions with Maximum Likelihood Estimation},
-  author       = {Sengupta, Debajyoti and Golling, Tobias and Raine, John and Sherrat, Karolos and Thaler, Jesse},
-  journal      = {SciPost Physics},
-  volume       = {17},
-  number       = {2},
-  pages        = {046},
-  year         = {2024},
-  publisher    = {SciPost},
-  html         = {https://scipost.org/SciPostPhys.17.2.046},
-  abbr         = {SciPost},
-  selected     = {true},
-  abstract     = {Conditional generative anomaly detection for resonance searches. Signal efficiency ~16,
-                  consistent gains over CWoLa/CATHODE, training time reduced from 10h to 3h.}
-}
+% 2025
 
 @article{radot2025,
-  title        = {RAD-OT: Resonance Anomaly Detection with Optimal Transport},
-  author       = {Sengupta, Debajyoti and Golling, Tobias and Raine, John},
+  title        = {Accelerating template generation in resonant anomaly detection searches with optimal transport},
+  author       = {Leigh, Matthew and Sengupta, Debajyoti and Nachman, Benjamin and Golling, Tobias},
   journal      = {Journal of High Energy Physics},
   volume       = {2025},
   number       = {12},
   pages        = {105},
   year         = {2025},
   publisher    = {Springer},
-  html         = {https://link.springer.com/article/10.1007/JHEP12(2025)105},
+  doi          = {10.1007/JHEP12(2025)105},
+  arxiv        = {2407.19818},
   abbr         = {JHEP},
+  selected     = {false},
+  abstract     = {Introduces RAD-OT, which builds resonance-search background templates by solving an optimal transport problem between two side-band regions, achieving sensitivity comparable to deep-learning-based approaches with improved stability.}
+}
+
+@article{nplm2025,
+  title        = {Robust resonant anomaly detection with NPLM},
+  author       = {Grosso, Gaia and Sengupta, Debajyoti and Golling, Tobias and Harris, Philip},
+  journal      = {European Physical Journal C},
+  volume       = {85},
+  number       = {9},
+  pages        = {1074},
+  year         = {2025},
+  publisher    = {Springer},
+  doi          = {10.1140/epjc/s10052-025-14759-w},
+  arxiv        = {2501.01778},
+  abbr         = {EPJC},
+  selected     = {false},
+  abstract     = {Evaluates the New Physics Learning Machine (NPLM) as an alternative to CWoLa/BDT-based resonant anomaly detection, finding it outperforms BDT approaches in low-signal-injection scenarios while reducing sensitivity to hyperparameter choices.}
+}
+
+% 2024
+
+@article{curtains2024,
+  title        = {CURTAINs Flows for Flows: Constructing Unobserved Regions with Maximum Likelihood Estimation},
+  author       = {Sengupta, Debajyoti and Klein, Samuel and Raine, John Andrew and Golling, Tobias},
+  journal      = {SciPost Physics},
+  volume       = {17},
+  number       = {2},
+  pages        = {046},
+  year         = {2024},
+  publisher    = {SciPost},
+  doi          = {10.21468/SciPostPhys.17.2.046},
+  arxiv        = {2305.04646},
+  abbr         = {SciPost},
   selected     = {true},
-  abstract     = {Optimal transport reformulation of resonance anomaly detection. Training time ≤1h.}
+  abstract     = {An improved version of CURTAINs that trains the conditional normalizing flow between two side-band regions with maximum likelihood estimation instead of an optimal-transport loss, improving robustness and training speed while significantly increasing sensitivity over the original method.}
 }
 
 @article{pcdroid2024,
   title        = {PC-Droid: Faster Diffusion and Improved Quality for Particle Cloud Generation},
-  author       = {Leigh, Matthew and Sengupta, Debajyoti and Golling, Tobias and Quétant, Guillaume and Raine, John and Reyes-González, Sebastián and Sherrat, Karolos},
+  author       = {Leigh, Matthew and Sengupta, Debajyoti and Raine, John Andrew and Qu\'etant, Guillaume and Golling, Tobias},
   journal      = {Physical Review D},
   volume       = {109},
   number       = {1},
   pages        = {012010},
   year         = {2024},
   publisher    = {American Physical Society},
-  html         = {https://journals.aps.org/prd/abstract/10.1103/PhysRevD.109.012010},
+  doi          = {10.1103/PhysRevD.109.012010},
+  arxiv        = {2307.06836},
   code         = {https://github.com/rodem-hep/pcdroid},
   abbr         = {Phys. Rev. D},
+  selected     = {false},
+  abstract     = {Builds on PC-JeDi with a new diffusion formulation and updated integration solvers, trained on all jet types simultaneously to reach state-of-the-art particle-cloud generation quality with generation times up to two orders of magnitude faster than PC-JeDi.}
+}
+
+@article{pcjedi2024,
+  title        = {PC-JeDi: Diffusion for Particle Cloud Generation in High Energy Physics},
+  author       = {Leigh, Matthew and Sengupta, Debajyoti and Qu\'etant, Guillaume and Raine, John Andrew and Zoch, Knut and Golling, Tobias},
+  journal      = {SciPost Physics},
+  volume       = {16},
+  number       = {1},
+  pages        = {018},
+  year         = {2024},
+  publisher    = {SciPost},
+  doi          = {10.21468/SciPostPhys.16.1.018},
+  arxiv        = {2303.05376},
+  abbr         = {SciPost},
+  selected     = {false},
+  abstract     = {Combines score-based diffusion models with transformers to generate LHC jets as particle clouds, reaching competitive fidelity against state-of-the-art generators with conditional control over jet mass and transverse momentum.}
+}
+
+@article{drapes2024,
+  title        = {Improving New Physics Searches with Diffusion Models for Event Observables and Jet Constituents},
+  author       = {Sengupta, Debajyoti and Leigh, Matthew and Raine, John Andrew and Klein, Samuel and Golling, Tobias},
+  journal      = {Journal of High Energy Physics},
+  volume       = {2024},
+  number       = {4},
+  pages        = {109},
+  year         = {2024},
+  publisher    = {Springer},
+  doi          = {10.1007/JHEP04(2024)109},
+  arxiv        = {2312.10130},
+  abbr         = {JHEP},
   selected     = {true},
-  abstract     = {Diffusion-based particle cloud generators, ~100× faster than Monte Carlo
-                  with ≤1% Wasserstein deviation.}
+  abstract     = {Introduces Drapes, a diffusion-based background-template method for resonance searches that generates templates directly from noise or by partially diffusing existing data, reaching state-of-the-art performance on the LHCO di-jet dataset with both high-level and jet-constituent inputs.}
+}
+
+@article{interplay2024,
+  title        = {The Interplay of Machine Learning-Based Resonant Anomaly Detection Methods},
+  author       = {Golling, Tobias and Kasieczka, Gregor and Krause, Claudius and Mastandrea, Radha and Nachman, Benjamin and Raine, John Andrew and Sengupta, Debajyoti and Shih, David and Sommerhalder, Manuel},
+  journal      = {European Physical Journal C},
+  volume       = {84},
+  number       = {3},
+  pages        = {241},
+  year         = {2024},
+  publisher    = {Springer},
+  doi          = {10.1140/epjc/s10052-024-12607-x},
+  arxiv        = {2307.11157},
+  abbr         = {EPJC},
+  selected     = {false},
+  abstract     = {A comparative study of resonant anomaly detection methods on the LHC Olympics dataset, showing that different approaches flag different events as signal-like and that combining multiple methods can reduce false positives and improve sensitivity.}
+}
+
+@article{pippin2024,
+  title        = {PIPPIN: Generating Variable Length Full Events from Partons},
+  author       = {Qu\'etant, Guillaume and Raine, John Andrew and Leigh, Matthew and Sengupta, Debajyoti and Golling, Tobias},
+  journal      = {Physical Review D},
+  volume       = {110},
+  number       = {7},
+  pages        = {076023},
+  year         = {2024},
+  publisher    = {American Physical Society},
+  doi          = {10.1103/PhysRevD.110.076023},
+  arxiv        = {2406.13074},
+  abbr         = {Phys. Rev. D},
+  selected     = {false},
+  abstract     = {Combines transformers, score-based models, and normalizing flows to generate full detector-level events directly from parton-level information, handling the variable multiplicity between parton and reconstructed object spaces.}
+}
+
+@article{skycurtains2024,
+  title        = {SkyCURTAINs: Model-Agnostic Search for Stellar Streams with Gaia Data},
+  author       = {Sengupta, Debajyoti and Mulligan, Stephen and Shih, David and Raine, John Andrew and Golling, Tobias},
+  journal      = {Monthly Notices of the Royal Astronomical Society},
+  volume       = {536},
+  number       = {2},
+  pages        = {1104--1114},
+  year         = {2024},
+  publisher    = {Oxford University Press},
+  doi          = {10.1093/mnras/stae2570},
+  arxiv        = {2405.12131},
+  abbr         = {MNRAS},
+  selected     = {true},
+  abstract     = {Adapts the CURTAINs method to search for stellar streams in Gaia data, building a background template from the correlation between a star's features and its proper motion. Recovers the GD-1 stream with 75.4\% purity, a 10-point improvement over prior ML-based methods, at 37.9\% signal efficiency.}
+}
+
+@inproceedings{atlasfastchain2024,
+  title        = {Faster Simulated Track Reconstruction in the ATLAS Fast Chain},
+  author       = {Leight, William and Javurkova, Martina and Tsai, Fang-Ying and Sengupta, Debajyoti and Golling, Tobias and Chapman, John},
+  booktitle    = {EPJ Web of Conferences},
+  volume       = {295},
+  pages        = {03014},
+  year         = {2024},
+  publisher    = {EDP Sciences},
+  doi          = {10.1051/epjconf/202429503014},
+  abbr         = {EPJ Web Conf.},
+  selected     = {false},
+  abstract     = {Presents speed improvements to simulated track reconstruction within the ATLAS Fast Chain, part of the ATLAS Collaboration's fast-simulation program, reported on behalf of the ATLAS Computing Activity.}
+}
+
+% 2023
+
+@article{curtainssw2023,
+  title        = {CURTAINs for Your Sliding Window: Constructing Unobserved Regions by Transforming Adjacent Intervals},
+  author       = {Raine, John Andrew and Klein, Samuel and Sengupta, Debajyoti and Golling, Tobias},
+  journal      = {Frontiers in Big Data},
+  volume       = {6},
+  pages        = {899345},
+  year         = {2023},
+  publisher    = {Frontiers Media},
+  doi          = {10.3389/fdata.2023.899345},
+  arxiv        = {2203.09470},
+  abbr         = {Front. Big Data},
+  selected     = {false},
+  abstract     = {Introduces CURTAINs, which uses invertible neural networks to map side-band data into the signal region and build a model-independent background template for resonance searches. Matches leading bump-hunt approaches while training on a much narrower mass range in a fully data-driven way.}
+}
+
+@article{epicfast2023,
+  title        = {EPiC-ly Fast Particle Cloud Generation with Flow-Matching and Diffusion},
+  author       = {Buhmann, Erik and Ewen, Cedric and Faroughy, Darius A. and Golling, Tobias and Kasieczka, Gregor and Leigh, Matthew and Qu\'etant, Guillaume and Raine, John Andrew and Sengupta, Debajyoti and Shih, David},
+  journal      = {arXiv preprint},
+  year         = {2023},
+  arxiv        = {2310.00049},
+  abbr         = {arXiv},
+  selected     = {false},
+  abstract     = {Introduces EPiC-JeDi and EPiC-FM, an equivariant point-cloud diffusion model and a flow-matching model for LHC jet generation, both reaching state-of-the-art fidelity on the JetNet benchmarks with faster generation than transformer-based diffusion models.}
+}
+
+@article{massive2023,
+  title        = {The Mass-ive Issue: Anomaly Detection in Jet Physics},
+  author       = {Golling, Tobias and Nobe, Takuya and Proios, Dimitrios and Raine, John Andrew and Sengupta, Debajyoti and Voloshynovskiy, Slava and Arguin, Jean-Francois and Leissner-Martin, Julien and Pilette, Jacinthe and Bakshi Gupta, Debottam and Farbin, Amir},
+  journal      = {arXiv preprint},
+  year         = {2023},
+  arxiv        = {2303.14134},
+  abbr         = {arXiv},
+  selected     = {false},
+  abstract     = {Highlights a core challenge in jet anomaly detection: preserving an unbiased estimate of jet mass. Using variational autoencoders and standard anomaly-detection metrics, shows that mass-sculpting is largely unavoidable across common approaches.}
 }
