@@ -133,8 +133,8 @@ bing_site_verification: # out your bing-site-verification ID (Bing Webmaster)
 # Blog
 # -----------------------------------------------------------------------------
 
-blog_name: al-folio # blog_name will be displayed in your blog page
-blog_description: a simple whitespace theme for academics
+blog_name: methinks # blog_name will be displayed in your blog page
+blog_description: Things I was thinking about, and some of the things I was working on. # blog_description will be displayed in your blog page
 permalink: /blog/:year/:title/
 lsi: false # produce an index for related posts
 
