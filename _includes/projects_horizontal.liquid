@@ -11,7 +11,17 @@
           <div class="card-body">
             <h3 class="card-title">{{ project.title }}</h3>
             <p class="card-text">{{ project.description }}</p>
-            <div class="row ml-1 mr-1 p-0">
+            {% if project.stack or project.tags %}
+              <div class="project-tags">
+                {% for item in project.stack %}
+                  <span class="project-tag project-tag-stack">{{ item }}</span>
+                {% endfor %}
+                {% for item in project.tags %}
+                  <span class="project-tag">{{ item }}</span>
+                {% endfor %}
+              </div>
+            {% endif %}
+            <div class="project-footer">
               {% if project.github %}
                 <div class="github-icon">
                   <div class="icon" data-toggle="tooltip" title="Code Repository">
@@ -19,11 +29,15 @@
                   </div>
                   {% if project.github_stars %}
                     <span class="stars" data-toggle="tooltip" title="GitHub Stars">
-                      <i class="fa-solid fa-star"></i>
-                      <span id="{{ project.github_stars }}-stars"></span>
+                      <i class="fa-solid fa-star"></i> {{ project.github_stars }}
                     </span>
                   {% endif %}
                 </div>
+              {% endif %}
+              {% if project.updated %}
+                <span class="project-updated" data-toggle="tooltip" title="Last Updated">
+                  <i class="fa-solid fa-clock"></i> {{ project.updated }}
+                </span>
               {% endif %}
             </div>
           </div>

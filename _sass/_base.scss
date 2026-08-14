@@ -168,6 +168,9 @@ ul.task-list input[type="checkbox"] {
 
 .card {
   background-color: var(--global-card-bg-color);
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
 
   .card-img {
     width: 100%;
@@ -181,6 +184,62 @@ ul.task-list input[type="checkbox"] {
   .card-body {
     padding: 1.25rem 1.25rem 1.25rem 1.25rem;
   }
+
+  &.hoverable:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 0.75rem 1.5rem rgba(0, 0, 0, 0.15);
+  }
+}
+
+// Project cards
+
+.project-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin: 0.75rem 0;
+}
+
+.project-tag {
+  font-size: 0.75rem;
+  font-weight: 500;
+  line-height: 1.6;
+  padding: 0.15rem 0.65rem;
+  border-radius: 1rem;
+  background-color: var(--global-divider-color);
+  color: var(--global-text-color-light);
+  white-space: nowrap;
+}
+
+.project-tag-stack {
+  background-color: color-mix(in srgb, var(--global-theme-color) 15%, transparent);
+  color: var(--global-theme-color);
+}
+
+.project-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  margin-top: 0.5rem;
+  color: var(--global-text-color-light);
+  font-size: 0.85rem;
+
+  .github-icon {
+    display: flex;
+    align-items: center;
+  }
+
+  .stars {
+    margin-left: 0.5rem;
+  }
+}
+
+.project-updated {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  white-space: nowrap;
 }
 
 // Citation

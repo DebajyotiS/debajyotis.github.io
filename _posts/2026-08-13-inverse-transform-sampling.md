@@ -23,7 +23,7 @@ Just like that, we have a random number. But if we pause to ask a slightly annoy
 
 Computers are fundamentally deterministic machines. Hand a processor the exact same inputs alongside the exact same internal state, and it will give you the exact same outputs every single time. So how does a completely deterministic box of silicon produce something we can honestly call "random"?
 
-Even if we solve that puzzle, a bigger one is immediately waiting for us in the wings. Suppose you do not want a simple decimal between 0 and 1. What if you need to draw samples from a Gaussian curve, an exponential decay, or some absurd custom distribution you just scribbled on a napkin? Your random number generator only gives you uniform floats between 0 and 1. How do you bend, stretch, and fold those plain decimals until they look like samples from the distribution you actually care about?
+Even if we solve that puzzle, a bigger one is immediately waiting for us in the wings. Suppose you do not want a simple decimal between 0 and 1, but samples from a Gaussian curve, an exponential decay, or some absurd custom distribution you just scribbled on a napkin. Your random number generator only gives you uniform floats between 0 and 1, so somehow those plain decimals need to be bent, stretched, and folded until they look like samples from the distribution you actually care about.
 
 In this post, we are going to answer that question from first principles. We will start with essentially nothing: a deterministic computer and a humble stream of random bits, building up to a general recipe for transforming simple random numbers into samples from known probability distributions.
 
@@ -36,7 +36,7 @@ When NumPy effortlessly hands you a decimal via `rng.random()`, there isn't a ti
 ```python
 # Run this as many times as you like, the output never changes
 rng = np.random.default_rng(42)
-print(rng.random())  # Always 0.7739560485559809
+print(rng.random())  # Always 0.7739560485559633
 ```
 
 This is why we call these systems **pseudo-random number generators** (PRNGs). They take a starting point, known as a seed, and deterministically compute a sequence of numbers that mimics the statistical behavior of pure noise. For almost every practical application, we do not need fundamental quantum randomness; we just need numbers that pass statistical tests for independence and uniformity.
@@ -59,7 +59,7 @@ samples = rng.random(1_000_000)
 
 Individual draws are unpredictable, but en masse, they reveal a perfectly flat structure. This distinction highlights something crucial about probability: a random variable isn't interesting because an individual point feels unpredictable; it is interesting because **the overall collection of samples obeys a specific shape**.
 
-Which brings us back to our core problem: what if we need a shape that isn't flat?
+The problem we actually care about starts where that flatness ends: what does it take to produce a shape that isn't flat?
 
 ## Finding a Ruler for Probability
 
@@ -91,7 +91,7 @@ This strategy is known as **inverse transform sampling**, and its execution is s
 2. Pass that value into the inverse cumulative distribution function $F_X^{-1}(U)$.
 3. The resulting output $X$ will be a perfectly valid sample drawn from $p(x)$.
 
-Why does this work so cleanly? The inverse CDF acts as an elastic ruler that stretches and compresses uniform probability levels. Regions of the target distribution containing 10% of the total mass get allocated exactly 10% of the uniform inputs. Steeper parts of the CDF compress uniform inputs into tight clusters, while flat regions spread them out over wider spans.
+The inverse CDF works so cleanly because it acts as an elastic ruler that stretches and compresses uniform probability levels. Regions of the target distribution containing 10% of the total mass get allocated exactly 10% of the uniform inputs. Steeper parts of the CDF compress uniform inputs into tight clusters, while flat regions spread them out over wider spans.
 
 We took an elementary, uniform decimal, fed it into a deterministic mathematical function, and produced a sample from a complex target distribution. Sampling isn't about creating random mass out of thin air; **sampling is a geometry transformation problem.**
 
