@@ -911,6 +911,23 @@ pre {
   }
 }
 
+// Mermaid diagrams render into a <pre class="mermaid">, which would
+// otherwise inherit the code-block styling above and overflow/left-align
+// at whatever native pixel width the diagram happens to render at.
+pre.mermaid {
+  display: flex;
+  justify-content: center;
+  overflow-x: auto;
+  color: initial;
+  background-color: transparent;
+  padding: 1rem 0;
+
+  svg {
+    max-width: 100%;
+    height: auto;
+  }
+}
+
 code {
   color: var(--global-theme-color);
   background-color: var(--global-code-bg-color);

@@ -121,53 +121,31 @@
       "name": "Core",
       "level": "Expert",
       "icon": "fa-solid fa-brain",
-      "keywords": [
-        "Generative Models (Diffusion, Flows)",
-        "Multimodal Learning",
-        "Scientific ML",
-        "Representation Learning"
-      ]
+      "keywords": ["Generative Models (Diffusion, Flows)", "Multimodal Learning", "Scientific ML", "Representation Learning"]
     },
     {
       "name": "Frameworks",
       "level": "Expert",
       "icon": "fa-solid fa-layer-group",
-      "keywords": [
-        "PyTorch",
-        "PyTorch Lightning",
-        "Transformers"
-      ]
+      "keywords": ["PyTorch", "PyTorch Lightning", "Transformers"]
     },
     {
       "name": "Systems",
       "level": "Proficient",
       "icon": "fa-solid fa-server",
-      "keywords": [
-        "Distributed Training (SLURM, Multi-node GPU)",
-        "HPC",
-        "Docker",
-        "Snakemake"
-      ]
+      "keywords": ["Distributed Training (SLURM, Multi-node GPU)", "HPC", "Docker", "Snakemake"]
     },
     {
       "name": "Techniques",
       "level": "Expert",
       "icon": "fa-solid fa-flask",
-      "keywords": [
-        "QLoRA",
-        "Quantisation-Aware Training",
-        "Parameter-Efficient Finetuning",
-        "Optimal Transport"
-      ]
+      "keywords": ["QLoRA", "Quantisation-Aware Training", "Parameter-Efficient Finetuning", "Optimal Transport"]
     },
     {
       "name": "Languages",
       "level": "Proficient",
       "icon": "fa-solid fa-code",
-      "keywords": [
-        "Python",
-        "Rust"
-      ]
+      "keywords": ["Python", "Rust"]
     }
   ],
   "languages": [

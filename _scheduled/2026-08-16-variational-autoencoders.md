@@ -8,6 +8,9 @@ tags: [ml, generative-modelling, deep-learning, vae]
 featured: false
 giscus_comments: false
 related_posts: true
+toc:
+  beginning: true
+  sidebar: true
 ---
 
 If you have ever played around with deep learning image generators, you have probably run across a diagram that looks something like an hourglass. On the left side, a massive image gets squished down into a tiny bottleneck vector. On the right side, that tiny vector gets blown back up into a brand new image.
@@ -22,8 +25,8 @@ If you actually try this with a standard autoencoder, the result is usually an u
 
 Imagine you want to train a network to compress images of handwritten digits. Your encoder takes a $28 \times 28$ pixel image of a handwritten '3' and compresses it down to just two numbers, say $(2.4, -1.1)$. Your decoder then takes $(2.4, -1.1)$ and reconstructs the original '3'.
 
-| Input Image (28×28) | Component | Latent Space (2D) | Component | Reconstruction |
-| :---: | :---: | :---: | :---: | :---: |
+| Input Image (28×28) |         Component         |     Latent Space (2D)      |         Component         |   Reconstruction    |
+| :-----------------: | :-----------------------: | :------------------------: | :-----------------------: | :-----------------: |
 | Handwritten **'3'** | **Encoder** $\rightarrow$ | $\mathbf{z} = (2.4, -1.1)$ | $\rightarrow$ **Decoder** | Handwritten **'3'** |
 
 If you train this model for a few hours, the reconstruction loss gets impressively low. The encoder learns to map every training image to a specific coordinate in 2D space, and the decoder learns to map those coordinates back to images.
@@ -42,9 +45,9 @@ This is the central breakthrough behind Variational Autoencoders. Instead of map
 
 $$\boldsymbol{\mu}, \boldsymbol{\sigma}^2 = \text{Encoder}(\mathbf{x})$$
 
-When an image comes in, the encoder isn't saying "this digit lives at coordinate 2.4." It is saying "this digit lives in a fuzzy Gaussian cloud centered at 2.4, with a spread of 0.1."
+When an image comes in, the encoder describes it as living in a fuzzy Gaussian cloud centered at 2.4, with a spread of 0.1, rather than pinning it to the exact coordinate 2.4.
 
-When the decoder wants to reconstruct the image, it doesn't just read $\boldsymbol{\mu}$. It draws a random sample from that Gaussian cloud:
+To reconstruct the image, the decoder draws a random sample from that Gaussian cloud rather than simply reading off $\boldsymbol{\mu}$:
 
 $$\mathbf{z} \sim \mathcal{N}(\boldsymbol{\mu}, \boldsymbol{\sigma}^2)$$
 
@@ -75,11 +78,11 @@ Everything we have discussed so far sounds brilliant on paper, but if you try to
 
 To train a neural network with gradient descent, every operation in your computation graph must be differentiable. But look at what happens in the middle of a VAE:
 
-| Step | Operation | Differentiable? |
-| :--- | :--- | :--- |
-| **Encoder** | Maps input $\mathbf{x} \longrightarrow (\boldsymbol{\mu}, \boldsymbol{\sigma})$ |  Yes |
-| **Stochastic Node** | Draws sample $\mathbf{z} \sim \mathcal{N}(\boldsymbol{\mu}, \boldsymbol{\sigma}^2)$ |  **No (Gradients stop here!)** |
-| **Decoder** | Maps sample $\mathbf{z} \longrightarrow \hat{\mathbf{x}}$ |  Yes |
+| Step                | Operation                                                                           | Differentiable?               |
+| :------------------ | :---------------------------------------------------------------------------------- | :---------------------------- |
+| **Encoder**         | Maps input $\mathbf{x} \longrightarrow (\boldsymbol{\mu}, \boldsymbol{\sigma})$     | Yes                           |
+| **Stochastic Node** | Draws sample $\mathbf{z} \sim \mathcal{N}(\boldsymbol{\mu}, \boldsymbol{\sigma}^2)$ | **No (Gradients stop here!)** |
+| **Decoder**         | Maps sample $\mathbf{z} \longrightarrow \hat{\mathbf{x}}$                           | Yes                           |
 
 Drawing a random sample from a distribution is a non-differentiable operation. You cannot compute a derivative through stochastic noise. If you can't pass gradients backward through $\mathbf{z}$ to the encoder, the whole network breaks during training.
 
@@ -97,16 +100,18 @@ Then, we compute $\mathbf{z}$ deterministically by scaling and shifting that noi
 
 $$\mathbf{z} = \boldsymbol{\mu} + \boldsymbol{\sigma} \odot \boldsymbol{\epsilon}$$
 
-| Component | Path / Formula | Gradient Flow |
-| :--- | :--- | :--- |
-| **Encoder Output** | $(\boldsymbol{\mu}, \boldsymbol{\sigma})$ |  Directly connected via algebra |
-| **Independent Noise** | $\boldsymbol{\epsilon} \sim \mathcal{N}(\mathbf{0}, \mathbf{I})$ |  Outside the main backprop path |
-| **Reparameterized Sample** | $\mathbf{z} = \boldsymbol{\mu} + \boldsymbol{\sigma} \odot \boldsymbol{\epsilon}$ |  **Gradients flow cleanly through $\boldsymbol{\mu}$ and $\boldsymbol{\sigma}$!** |
-| **Decoder** | $\text{Decoder}(\mathbf{z})$ |  Receives valid backprop signals |
+| Component                  | Path / Formula                                                                    | Gradient Flow                                                                    |
+| :------------------------- | :-------------------------------------------------------------------------------- | :------------------------------------------------------------------------------- |
+| **Encoder Output**         | $(\boldsymbol{\mu}, \boldsymbol{\sigma})$                                         | Directly connected via algebra                                                   |
+| **Independent Noise**      | $\boldsymbol{\epsilon} \sim \mathcal{N}(\mathbf{0}, \mathbf{I})$                  | Outside the main backprop path                                                   |
+| **Reparameterized Sample** | $\mathbf{z} = \boldsymbol{\mu} + \boldsymbol{\sigma} \odot \boldsymbol{\epsilon}$ | **Gradients flow cleanly through $\boldsymbol{\mu}$ and $\boldsymbol{\sigma}$!** |
+| **Decoder**                | $\text{Decoder}(\mathbf{z})$                                                      | Receives valid backprop signals                                                  |
 
 Notice what changed. The stochastic node $\boldsymbol{\epsilon}$ is now a standalone input on the side. The main path from the encoder parameters $(\boldsymbol{\mu}, \boldsymbol{\sigma})$ to the decoder contains only simple addition and multiplication operations.
 
 Gradients can now flow cleanly backward through $\boldsymbol{\mu}$ and $\boldsymbol{\sigma}$ without hitting any non-differentiable walls.
+
+### Implementing the Trick
 
 In PyTorch, implementing this trick takes less than three lines of code:
 
@@ -127,7 +132,7 @@ It's worth zooming out and seeing how this connects to sampling more broadly.
 
 Our [earlier series on sampling]({% post_url 2026-08-13-inverse-transform-sampling %}) built a full toolbox for a specific setup: someone hands you a known distribution $p(x)$, and the job is to draw samples from it. [Inverse transform sampling]({% post_url 2026-08-13-inverse-transform-sampling %}) handled the cases with a closed-form CDF, [MCMC methods]({% post_url 2026-08-14-mcmc-sampling %}) handled the intractable ones, and [Monte Carlo integration]({% post_url 2026-08-15-monte-carlo-integration %}) showed what those samples were actually good for.
 
-VAEs invert that whole setup. Instead of deriving a transformation mathematically from a known $p(x)$, we use data to *learn* a high-dimensional transformation network:
+VAEs invert that whole setup. Instead of deriving a transformation mathematically from a known $p(x)$, we use data to _learn_ a high-dimensional transformation network:
 
 1. We sample simple Gaussian noise $\mathbf{z} \sim \mathcal{N}(\mathbf{0}, \mathbf{I})$.
 2. We feed that noise into our trained, deterministic decoder network $p_\theta(\mathbf{x} \mid \mathbf{z})$.
@@ -137,10 +142,12 @@ The encoder's only job during training was to organize the latent space so that 
 
 To generate brand-new samples, you sample noise $\mathbf{z}$, run it through the decoder, and watch your network forge new data out of pure randomness:
 
-$$\boxed{
+$$
+\boxed{
 \mathbf{z} \sim \mathcal{N}(\mathbf{0}, \mathbf{I})
 \quad \longrightarrow \quad
 \text{Decoder}
 \quad \longrightarrow \quad
 \mathbf{x} \sim p_{\text{data}}(\mathbf{x})
-}$$
+}
+$$

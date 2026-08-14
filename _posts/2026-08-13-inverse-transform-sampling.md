@@ -8,9 +8,12 @@ tags: [ml, generative-modelling, probability]
 featured: false
 giscus_comments: false
 related_posts: true
+toc:
+  beginning: true
+  sidebar: true
 ---
 
-There is an unassuming snippet of code that quietly sneaks its way into almost every machine learning repository on the planet:
+There is an unassuming snippet of code that sneaks its way into almost every machine learning repository on the planet:
 
 ```python
 import numpy as np
@@ -39,7 +42,7 @@ rng = np.random.default_rng(42)
 print(rng.random())  # Always 0.7739560485559633
 ```
 
-This is why we call these systems **pseudo-random number generators** (PRNGs). They take a starting point, known as a seed, and deterministically compute a sequence of numbers that mimics the statistical behavior of pure noise. For almost every practical application, we do not need fundamental quantum randomness; we just need numbers that pass statistical tests for independence and uniformity.
+This is why we call these systems **pseudo-random number generators** (PRNGs). They take a starting point, known as a seed, and deterministically compute a sequence of numbers that mimics the statistical behavior of pure noise. For almost every practical application, numbers that pass statistical tests for independence and uniformity work just as well as fundamental quantum randomness.
 
 Far from being a drawback, this predictability is actually a superpower in machine learning and data science. Setting a seed ensures that your experiment is completely reproducible. If your model achieves brilliant results with seed 42, anyone else on earth can run your code and verify the exact same results. Reproducibility beats philosophical purity every single time.
 
@@ -57,7 +60,7 @@ If you sample a million points from this generator and plot them as a histogram,
 samples = rng.random(1_000_000)
 ```
 
-Individual draws are unpredictable, but en masse, they reveal a perfectly flat structure. This distinction highlights something crucial about probability: a random variable isn't interesting because an individual point feels unpredictable; it is interesting because **the overall collection of samples obeys a specific shape**.
+Individual draws are unpredictable, but en masse, they reveal a perfectly flat structure. This distinction highlights something crucial about probability: what makes a random variable interesting is **the specific shape the overall collection of samples obeys**, not whether any single point feels unpredictable.
 
 The problem we actually care about starts where that flatness ends: what does it take to produce a shape that isn't flat?
 
@@ -73,7 +76,7 @@ $$F_X(x) = P(X \leq x)$$
 
 You can think of the CDF as sliding a vertical bar across your distribution from left to right, sweeping up probability mass as it goes. On the far left, you have gathered nothing, so $F_X(x) \approx 0$. By the time your sliding bar reaches the far right, you have swept up all the probability, making $F_X(x) \approx 1$.
 
-Notice what just happened. The CDF takes any physical value $x$ from your distribution and maps it to an output number between 0 and 1. Meanwhile, our basic computer random generator spits out values between 0 and 1. That structural symmetry is not a coincidence; it is the master key to sampling.
+Notice what just happened. The CDF takes any physical value $x$ from your distribution and maps it to an output number between 0 and 1. Meanwhile, our basic computer random generator spits out values between 0 and 1. That structural symmetry is the master key to sampling.
 
 ## Running the Machine in Reverse
 
@@ -81,7 +84,7 @@ Let's revisit the standard uniform distribution $U \sim \mathcal{U}(0,1)$. Becau
 
 Now, let's flip the perspective. What if, instead of asking "how much probability accumulates up to $x$?", we ask the question in reverse: **"At what coordinate $x$ does our accumulated probability reach 73%?"**
 
-For the uniform distribution, the answer is trivially 0.73. But when you apply this exact same reverse lookup to *any* continuous distribution, something remarkable happens.
+For the uniform distribution, the answer is trivially 0.73. But when you apply this exact same reverse lookup to _any_ continuous distribution, something remarkable happens.
 
 $$X = F_X^{-1}(U)$$
 
@@ -93,7 +96,7 @@ This strategy is known as **inverse transform sampling**, and its execution is s
 
 The inverse CDF works so cleanly because it acts as an elastic ruler that stretches and compresses uniform probability levels. Regions of the target distribution containing 10% of the total mass get allocated exactly 10% of the uniform inputs. Steeper parts of the CDF compress uniform inputs into tight clusters, while flat regions spread them out over wider spans.
 
-We took an elementary, uniform decimal, fed it into a deterministic mathematical function, and produced a sample from a complex target distribution. Sampling isn't about creating random mass out of thin air; **sampling is a geometry transformation problem.**
+We took an elementary, uniform decimal, fed it into a deterministic mathematical function, and produced a sample from a complex target distribution. **Sampling is a geometry transformation problem**, not an act of conjuring randomness out of thin air.
 
 ## A Concrete Example: The Exponential Distribution
 
@@ -113,13 +116,14 @@ def sample_exponential(lambda_param: float, size: int = 1) -> np.ndarray:
     return -np.log(u) / lambda_param
 ```
 
-If you draw a million points with this function and plot their histogram, you will recover an exponential decay curve. The target distribution didn't exist inside Python's random generator; we forged it by warping a uniform line through a logarithm.
+If you draw a million points with this function and plot their histogram, you will recover an exponential decay curve. The target distribution never existed inside Python's random generator. We forged it by warping a uniform line through a logarithm.
 
 ## The Journey So Far
 
 We have built a working pipeline from raw deterministic silicon all the way to controlled probability distributions:
 
-$$\boxed{
+$$
+\boxed{
 \text{random bits}
 \rightarrow
 \text{PRNG}
@@ -129,7 +133,8 @@ U\sim\mathcal{U}(0,1)
 F^{-1}
 \rightarrow
 X\sim p(x)
-}$$
+}
+$$
 
 This algebraic trick works brilliantly whenever we can write down $F^{-1}$ explicitly. But what happens when the math gets messy, the inverse CDF has no closed form, or we want to sample complex high-dimensional objects like images?
 
