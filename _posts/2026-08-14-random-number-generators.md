@@ -12,7 +12,7 @@ toc:
   beginning: true
   sidebar: true
 ---
-Say you open up your fire up your programming language, and a suitable random number generator (RNG) package therein.
+Say you fire up your favourite programming language, and a suitable random number generator (RNG) package therein.
 Call `random.seed(42)` (or something equivalent to set the random seed), draw a number, restart the program, call `random.seed(42)` again, and you get the exact same number back. Do it a thousand times and you get the exact same thousand numbers, in the exact same order, forever. If you had to design a definition of "not random" from scratch, perfect on-demand reproducibility would be a good place to start.
 
 And yet this is the thing every probabilistic method in machine learning is built on. This post is for readers comfortable with Python and basic probability who have called a `seed()` function more times than they've asked what it does underneath. What it does, it turns out, is short, mechanical, because every other post in this series (every sampler, every Markov chain, every diffusion model's noise, every flow's base distribution) is going to be a function of what comes out of it.
