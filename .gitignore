@@ -11,3 +11,7 @@ assets/libs/
 node_modules/
 vendor
 .idea
+
+*.skill
+reading-list.md
+SKILL*
