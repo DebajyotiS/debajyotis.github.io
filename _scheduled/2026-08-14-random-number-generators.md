@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Your Random Number Generator Is Not Random"
-date: 2026-08-17
+date: 2026-08-14
 description: Every sample in this series is a deterministic function of uniform bits, where those bits come from and why that's fine.
 categories: GenAI
 tags: [ml, generative-modelling, probability, rng]
