@@ -17,7 +17,7 @@ Call `random.seed(42)` (or something equivalent to set the random seed), draw a 
 
 And yet this is the thing every probabilistic method in machine learning is built on. This post is for readers comfortable with Python and basic probability who have called a `seed()` function more times than they've asked what it does underneath. What it does, it turns out, is short, mechanical, because every other post in this series (every sampler, every Markov chain, every diffusion model's noise, every flow's base distribution) is going to be a function of what comes out of it.
 
-## A generator is a short program
+## A generator is actually just a short program
 
 If you strip away the language bindings, a random number generator is simply a recurrence relation. The oldest and simplest useful one is the so called linear congruential generator:
 
@@ -44,7 +44,7 @@ lcg(seed=1, a=5, c=3, m=16, n=20)
 
 Notice that it generates sixteen(!) numbers, and then it repeats from the start. It visited every integer from 0 to 15 exactly once before cycling. This is not an accident. It's a consequence of the particular $a$ and $c$ chosen (the Hull–Dobell theorem gives the exact conditions, if you were keen on following up), and it's the best you could possibly ask of a generator with sixteen possible states. This is the entire mechanism. `numpy.random`, your language's standard library, the generator inside PyTorch: all of it is this idea, with a modulus around $2^{64}$ or larger and considerably more care put into choosing $a$ and $c$.
 
-## The two ways a generator can be bad
+## A generator can be bad
 
 So, a generator with modulus $m$ can produce at most $m$ distinct values before it repeats. Then the first thing you want is a **long period**: you should exhaust your Monte Carlo budget long before the sequence loops back on itself. That part is easy to check by construction.
 
@@ -87,7 +87,7 @@ $$
 X_{n+2} - 6X_{n+1} + 9X_n \equiv (a^2 - 6a + 9)\,X_n \equiv 0 \pmod{m}.
 $$
 
-That's an _exact_ linear relation among any three consecutive outputs, baked into the choice of $a$ before a single number was ever generated. It forces every triple $(u_n, u_{n+1}, u_{n+2})$ onto one of a handful of parallel planes in the unit cube, a count you can work out from how far $9u_n - 6u_{n+1} + u_{n+2}$ can range, which is exactly fifteen. George Marsaglia published this in 1968, a decade after RANDU had shipped inside statistical packages used across the sciences.
+That's an _exact_ linear relation among any three consecutive outputs, baked into the choice of $a$. It forces every triple $(u_n, u_{n+1}, u_{n+2})$ onto one of a handful of parallel planes in the unit cube, a count you can work out from how far $9u_n - 6u_{n+1} + u_{n+2}$ can range, which is exactly fifteen. George Marsaglia published this in 1968, a decade after RANDU had shipped inside statistical packages used across the sciences.
 
 I think the RANDU story usually gets told wrong, if at all, as a cautionary tale about one bad multiplier. The actual failure is that an entire scientific community spent a decade treating "passes the tests we happened to run" as equivalent to "is fine," and those aren't the same claim unless your tests are exhaustive, which they never are. You could object that this is unfair. Bounding a generator's behavior in every dimension it might ever get used in isn't computationally possible, so some amount of `trust-until-broken` is unavoidable. That's true, and it doesn't change what you should do with it, which is treat "nothing's broken yet" as a status report, not a guarantee.
 
@@ -97,7 +97,7 @@ The modern version of "checking anyone thought to run" is [TestU01](https://simu
 
 "Passing BigCrush" means something weaker than it sounds. There are no test in that specific collection that has detected a deviation from uniform, at whatever significance threshold you chose, on the sequences you happened to feed it. You should know that this is not a proof that the generator is free of exploitable structure, only that the structure isn't one of the roughly hundred kinds anyone has written a test for yet. RANDU would have failed almost every test in BigCrush catastrophically. But the tests that existed in the 1960s were mostly one- and two-dimensional, which were exactly the dimensions in which RANDU looks fine.
 
-## What people actually reach for now
+## What do people use now?
 
 Currently, to my knowledge, three generators dominate current practice. They trade off state size, speed, and how much scrutiny they've survived.
 
@@ -107,7 +107,7 @@ The **Mersenne Twister** (MT19937) has an enormous period, $2^{19937}-1$, and wa
 
 The **xoshiro/xoroshiro** family (Blackman and Vigna) generates by shifting, rotating, and XOR-ing a small register, which makes it fast with only 128–256 bits of state, and it also clears BigCrush.
 
-Here's the practical upshot - If you take one thing from this section: prefer `rng = np.random.default_rng(seed)` and pass `rng` around explicitly, over the older global `np.random.seed(seed)`. A single shared global generator means any library you import that draws numbers behind your back (and several will) perturbs a stream you thought was yours.
+Here's the practical upshot - If you take one thing from this section: prefer `rng = np.random.default_rng(seed)` and pass `rng` around explicitly, over the older global `np.random.seed(seed)`. A single shared global generator means any library you import that draws numbers behind your back (and several will) perturbs a stream you thought was yours. And if you ever need several independent streams at once, parallel chains, say, both PCG and xoshiro support jumping ahead to a distant point in the sequence rather than juggling multiple arbitrary seeds.
 
 ## Why not just use real randomness?
 
@@ -117,6 +117,6 @@ It's because switching to it costs you reproducibility.  You can't replay a spec
 
 ## Where this leaves us
 
-This post is part of a larger series on generative modelling. Every method in the rest of this series will start from a stream like the one described here. Record the seed for every experiment, use one generator instance per run rather than a shared global one. If you ever need several independent streams at once (parallel chains, say), both PCG and xoshiro support jumping ahead to a distant point in the sequence.
+Modern generators pass every test anyone has thought to run against them. So did RANDU, once. That's not a reason for alarm: it's an epistemic position a deterministic recurrence puts you in.
 
-Modern generators pass every test anyone has thought to run against them. So did RANDU, once. That's not a reason for alarm: it's the honest epistemic position a deterministic recurrence puts you in, and it's worth carrying forward rather than resolving away. The next post starts from a perfect, uncorrelated stream of these numbers and asks how to turn it into a sample from an arbitrary distribution. It turns out that even with a flawless generator, the obvious methods fail for a reason that has nothing to do with anything in this post, and everything to do with dimension.
+The next post starts from a perfect, uncorrelated stream of these numbers and asks how to turn it into a sample from an arbitrary distribution. It turns out that even with a flawless generator, the obvious methods fail as you try to scale up the dimensions.
