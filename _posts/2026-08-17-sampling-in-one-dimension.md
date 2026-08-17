@@ -1,8 +1,8 @@
 ---
 layout: post
-title: "One Uniform Distribution Is Enough, Until the Dimension Grows"
+title: "One Uniform Distribution Is All You Need*"
 date: 2026-08-17
-description: Inverse-CDF, rejection sampling, and importance sampling all turn uniform bits into arbitrary distributions in one dimension. All three die exponentially in high dimension.
+description: Inverse-CDF, rejection sampling, and importance sampling all turn uniform bits into arbitrary distributions in one dimension. But all three perform poorly, exponentially so, in high dimension.
 categories: GenAI
 tags: [ml, generative-modelling, probability, sampling]
 featured: false
