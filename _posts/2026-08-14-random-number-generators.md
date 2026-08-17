@@ -93,7 +93,7 @@ I think the RANDU story usually gets told wrong, if at all, as a cautionary tale
 
 ## Passing a test battery is not proof of anything
 
-The modern version of "checking anyone thought to run" is [TestU01](https://simul.iro.umontreal.ca/testu01/tu01.html), Pierre L'Ecuyer's suite of statistical tests, bundled into batteries of increasing severity: SmallCrush, Crush, and BigCrush. The last one runs over a hundred distinct tests, among them birthday spacings, linear complexity, and matrix rank, each looking for a different flavor of structure a generator's output shouldn't have.
+The modern version of "checking anyone thought to run" is [TestU01](https://www.iro.umontreal.ca/~simul/testu01/tu01.html), Pierre L'Ecuyer's suite of statistical tests, bundled into batteries of increasing severity: SmallCrush, Crush, and BigCrush. The last one runs over a hundred distinct tests, among them birthday spacings, linear complexity, and matrix rank, each looking for a different flavor of structure a generator's output shouldn't have.
 
 "Passing BigCrush" means something weaker than it sounds. There are no test in that specific collection that has detected a deviation from uniform, at whatever significance threshold you chose, on the sequences you happened to feed it. You should know that this is not a proof that the generator is free of exploitable structure, only that the structure isn't one of the roughly hundred kinds anyone has written a test for yet. RANDU would have failed almost every test in BigCrush catastrophically. But the tests that existed in the 1960s were mostly one- and two-dimensional, which were exactly the dimensions in which RANDU looks fine.
 
