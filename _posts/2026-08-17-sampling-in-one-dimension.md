@@ -16,6 +16,7 @@ I ended the last post with a perfect, uncorrelated stream of numbers in $[0,1)$,
 
 Say you have $u \sim \mathcal{U}(0,1)$ and you want $x$ from some other distribution entirely, an exponential, a Gaussian, or a bimodal mess you can only evaluate pointwise. The question is how do you get there from a single uniform number?
 
+
 ## Flipping the CDF, politely
 
 Every distribution has a CDF, defined as $F(x) = P(X \le x)$, and every CDF is a function that takes in $x$ and returns a number in $[0,1]$. What happens if you run it backwards? If $U \sim \mathcal{U}(0,1)$, then $X = F^{-1}(U)$ has exactly the distribution you wanted. This is the so-called the probability integral transform!
@@ -34,17 +35,17 @@ def sample_exponential(rng, n):
 
 The figure shows why this works. Where the CDF is steep, a small window of $u$ covers a wide window of $x$, so draws rarely land there. Places where the CDF is flat, the same window of $u$ covers a narrow window of $x$, so draws pile up. The steepness of $F$ is related to the density, and inverting it converts uniform coverage on the $u$-axis directly into the right coverage on the $x$-axis.
 
-Cool! So why doesn't everyone just do this for everything? Because closed-form inverses are rare. Consider a simple counterexample. The Gaussian. Its CDF, $\Phi(x) = \tfrac12\left[1+\mathrm{erf}(x/\sqrt2)\right]$, has no elementary inverse. You can still get $\Phi^{-1}(u)$, but only by numerical approximation, and Gaussians are used often enough in Monte Carlo inner loops that this used to matter a lot.
+Cool! So why doesn't everyone just do this for everything? Because closed-form inverses are rare. Consider a simple counterexample. The Gaussian. Its CDF, $\Phi(x) = \tfrac12\left[1+\mathrm{erf}(x/\sqrt2)\right]$, has no elementary inverse. You can still get $\Phi^{-1}(u)$, but only by numerical approximation! No bueno.
 
 ## A neat trick for Gaussians
 
-Although a single Gaussian's CDF won't invert, a pair of them will. We just need to move away from Cartesian coordinates. Take two independent standard normals $X, Y$. Their joint density is rotationally symmetric, so switch to polar: $R^2 = X^2+Y^2$ and $\theta = \arctan(Y/X)$. It turns out $\theta$ is uniform on $(0, 2\pi)$ and $R^2$ is exponential, and both of those invert by hand, the same trick as the section above. This is the famous [Box-Muller transform](https://projecteuclid.org/journals/annals-of-mathematical-statistics/volume-29/issue-2/A-Note-on-the-Generation-of-Random-Normal-Deviates/10.1214/aoms/1177706645.full), from Box and Muller's 1958 paper:
+Even though a single Gaussian's CDF won't invert, a pair of them will! We just need to move away from Cartesian coordinates. Take two independent standard normals $X, Y$. Their joint density is rotationally symmetric, so switch to polar: $R^2 = X^2+Y^2$ and $\theta = \arctan(Y/X)$. It turns out $\theta$ is uniform on $(0, 2\pi)$ and $R^2$ is exponential, and both of those invert by hand (the same trick as the section above). This is the famous [Box-Muller transform](https://projecteuclid.org/journals/annals-of-mathematical-statistics/volume-29/issue-2/A-Note-on-the-Generation-of-Random-Normal-Deviates/10.1214/aoms/1177706645.full), from Box and Muller's 1958 paper:
 
 $$
 R = \sqrt{-2\ln U_1}, \qquad \theta = 2\pi U_2, \qquad X = R\cos\theta, \quad Y = R\sin\theta.
 $$
 
-Two uniforms in, two exact standard normals out, no approximation anywhere. The catch is the two transcendental calls, `sin` and `cos`, which used to be the expensive part of this whole operation on older hardware.
+Two uniforms in, two exact standard normals out, without any numerical approximation. There is, however, a catch. There are two transcendental calls, `sin` and `cos`, which are quite expensive (on older hardware). Can we do better?
 
 [George Marsaglia's fix](https://epubs.siam.org/doi/10.1137/1006063), with Thomas Bray in 1964, removes them by getting $\cos\theta$ and $\sin\theta$ geometrically instead of trigonometrically. Draw a point $(u,v)$ uniformly on the square $[-1,1]^2$, and keep only the ones that land inside the unit circle, where $s = u^2+v^2 \in (0,1)$. For such a point, $u/\sqrt{s}$ and $v/\sqrt{s}$ already are the cosine and sine of its angle, for free, no trig function needed.
 
@@ -62,7 +63,7 @@ Notice what just happened. To dodge two trig calls, Marsaglia's method throws da
 
 ## The Ziggurat
 
-So, neither of the two methods above is what your machine actually calls when you run `np.random.normal()`. That's the Ziggurat algorithm, from [Marsaglia and Tsang's 2000 paper](https://www.jstatsoft.org/article/view/v005i08).
+So a bit of a disclaimer - neither of the two methods above is what your machine actually calls when you run `np.random.normal()`. That's the Ziggurat algorithm, from [Marsaglia and Tsang's 2000 paper](https://www.jstatsoft.org/article/view/v005i08).
 
 The idea is to cover the density with a stack of horizontal rectangles of equal area, layered from a wide short one at the bottom to a tall thin sliver at the top, near the tail. Sampling then amounts to picking a random layer and a random horizontal position in it. Almost all such positions fall under the curve within that layer, and you can check that with one comparison and no function calls at all. Only the rare position that lands in the sliver where a rectangle pokes out past the true density needs a slower fallback. Since that's a small fraction of draws, the amortized cost is close to one comparison and one multiply, faster than either Box–Muller or its polar cousin. This is what current numpy, and most serious scientific libraries, actually run under `standard_normal`.
 
@@ -91,9 +92,9 @@ The whole method depends on how tight $M$ can be made, which is really a questio
 
 ## Importance sampling
 
-If you push $q$ far enough from $p$, $M$ becomes unknown, or so large that keeping even one out of a million proposals would be luck. Rejection sampling's whole strategy is quite literally _discard what doesn't fit_, which stops being viable in this case.
+If you push $q$ far enough from $p$, $M$ becomes unknown, or so large that keeping even one out of a million proposals would be down to luck. Rejection sampling's whole strategy is quite literally _discard what doesn't fit_, which stops being viable in this case.
 
-Importance sampling keeps every draw and fixes the mismatch by reweighting instead! Lets draw $x_1, \dots, x_N$ from $q$, and instead of accepting or rejecting, attach each one a weight $w_i = \tilde p(x_i)/q(x_i)$, where $\tilde p$ is allowed to be an unnormalized version of your target. Then normalize the weights to sum to one and use them directly as an estimator:
+Importance sampling, instead, keeps every draw and fixes the mismatch by reweighting! Lets draw $x_1, \dots, x_N$ from $q$, and instead of accepting or rejecting, attach each one a weight $w_i = \tilde p(x_i)/q(x_i)$, where $\tilde p$ is allowed to be an unnormalized version of your target. Then normalize the weights to sum to one and use them directly as an estimator:
 
 $$
 \mathbb{E}_p[f(X)] \approx \sum_i \hat w_i\, f(x_i), \qquad \hat w_i = \frac{w_i}{\sum_j w_j}.
@@ -106,9 +107,9 @@ def self_normalized_is(x_samples, p_tilde, q_pdf, f):
     return np.sum(w_hat * f(x_samples))
 ```
 
-Look closely at that ratio and notice that any constant multiplying $\tilde p$, in particular whatever normalizing constant $Z$ you didn't want to compute, cancels between the numerator and denominator! This is the first time in this series that the normalizer disappears for free rather than needing to be dodged with cleverness (it won't be the last). Every family of generative model this series eventually covers is, in one way or another, working around the fact that $Z$ is usually the one quantity you cannot get your hands on!
+Look closely at that ratio and notice that any constant multiplying $\tilde p$, in particular whatever normalizing constant $Z$ you didn't want to compute, cancels between the numerator and denominator! This is the first time so far that the normalizer disappears for free rather than needing to be dodged with cleverness (it won't be the last). Every family of generative model that this series eventually covers is, in one way or another, working around the fact that $Z$ is usually the one quantity you cannot get your hands on!
 
-Reweighting instead of discarding sounds like it should be strictly better than rejection, and in one sense it is. You never throw a sample away outright. But a badly matched $q$ doesn't disappear. It just relocates into the weights. If $q$ rarely falls in the region where $p$ actually lives, the few samples that do land there get enormous weights, and everything else gets a weight near zero. Your estimate is then effectively built from one or two data points.
+Reweighting instead of discarding sounds like it should be strictly better than rejection, and in one sense it is. You never throw a sample away outright. But a badly matched $q$ simply moves the problem into the weights. If $q$ rarely falls in the region where $p$ actually lives, the few samples that do land there get enormous weights, and everything else gets a weight near zero. Your estimate is then effectively built from one or two data points.
 
 The standard way to see through the disguise is the effective sample size, a diagnostic Leslie Kish worked out for weighted survey estimates back in 1965: $\mathrm{ESS} = (\sum_i w_i)^2 / \sum_i w_i^2$. It ranges from $1$, one dominant weight carrying everything, up to $N$, every weight equal. It answers a concrete question: how many honest draws from $p$ would your $N$ weighted draws from $q$ be worth?
 
